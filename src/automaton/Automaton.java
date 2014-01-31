@@ -9,6 +9,9 @@ package automaton;
  * @author .
  */
 public class Automaton {
+    private int start;
+    private int end;
+    
     /**
      * 
      * @param aut

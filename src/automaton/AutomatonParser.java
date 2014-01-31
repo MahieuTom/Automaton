@@ -4,7 +4,14 @@
 
 package automaton;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,17 +22,32 @@ public class AutomatonParser {
      * TODO: parse!
      * @param filename 
      */
-    public AutomatonParser(String filename){
-        FileInputStream inputStream = new FileInputStream(filename);
-        try {
-            String everything = IOUtils.toString(inputStream);
-        } finally {
-            inputStream.close();
+    public AutomatonParser(String filename) throws Exception{
+        FileInputStream stream = new FileInputStream(filename);
+        DataInputStream in = new DataInputStream(stream);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+        String s;
+        while ((s = br.readLine()) != null)   {
+            if(s.matches("(START) |- ")){
+                s.replaceFirst("(START) |- ", "");
+                int start = Integer.parseInt(s);
+            }else if(s.matches(" -| (FINAL) ")){
+                s.replaceFirst(" -| (FINAL) ", "");
+                int einde = Integer.parseInt(s);
+            }else{
+                ;
+            }
+            System.out.println(s);
         }
+        in.close();
         
-        char = 'D';
-        AutomatonActions aa = aa.getAction(c);
+        char c = 'D';
+        AutomatonActions aa = AutomatonActions.EMPTY;
+        aa = aa.getAction(c);
     }
+    
+    
     
     /**
      * 
