@@ -1,5 +1,5 @@
 /*
- * This Automaton Project is made by Ghijs Kilani and Tom Mahieu
+ * This Automaton Project is made by Ghijs Kilani and Tom Mahieu yay
  */
 
 package automaton;
