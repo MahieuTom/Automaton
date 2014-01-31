@@ -33,14 +33,26 @@ public class Automaton {
         return null;
     }
     
+    /**
+     * Waar moet de Automaton starten.
+     * @param start het start punt.
+     */
     public void setStart(int start){
         m_start = start;
     }
     
+    /**
+     * Waar moet de Automaton stoppen.
+     * @param end het final punt.
+     */
     public void setFinal(int end){
         m_final = end;
     }
     
+    /**
+     * Voeg een extra connectie toe.
+     * @param road een gemaakte weg.
+     */
     public void addRoad(AutomatonRoad road){
         m_roads.add(road);
     }
