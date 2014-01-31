@@ -1,5 +1,5 @@
 /*
- * This Automaton Project is made by Ghijs Kilani and Tom Mahieu yay
+ * This Automaton Project is made by Ghijs Kilani and Tom Mahieu
  */
 
 package automaton;
@@ -7,12 +7,7 @@ package automaton;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Parse een '.aut' bestand.
