@@ -64,28 +64,38 @@ public class AutomatonParser {
      * @param s de string die moet gecontroleerd worden.
      */
     private void editAtomaton(String s) throws Exception{
-        if(s.matches("(START) |- ")){
+        if(s.matches("(START) |- ") && !startGevonden){
             s = s.replaceFirst("(START) |- ", "");
             automaton.setStart(Integer.parseInt(s));
             startGevonden = true;
-        }else if(s.matches(" -| (FINAL) ")){
+        }else if(s.matches(" -| (FINAL) ") && !finalGevonden){
             s = s.replaceFirst(" -| (FINAL) ", "");
             automaton.setFinal(Integer.parseInt(s));
             finalGevonden = true;
+        }else if ((s.matches("(START) |- ") && startGevonden) || (s.matches(" -| (FINAL) ") && finalGevonden)){
+            throw new Exception();
         }else{
-            int start,end;
-            AutomatonActions action;
-            String[] output = new String[3];
-            AutomatonRoad road;
-            
-            output = s.split(" "); //TODO: safe & correct???
-            start = Integer.parseInt(output[0]);
-            end = Integer.parseInt(output[1]);
-            action = AutomatonActions.getAction((output[2].charAt(0)));
-            road = new AutomatonRoad(start,end,action);
-            
-            automaton.addRoad(road);
+            parseRoad(s);            
         }
+    }
+    
+    /**
+     * Maar een nieuwe connectie aan tussen punten.
+     * @param s de bewoording van de connectie opgegeven in het bestand.
+     */
+    private void parseRoad(String s) throws Exception{
+        int start,end;
+        AutomatonActions action;
+        String[] output = new String[3];
+        AutomatonRoad road;
+
+        output = s.split(" "); //TODO: safe & correct???
+        start = Integer.parseInt(output[0]);
+        end = Integer.parseInt(output[1]);
+        action = AutomatonActions.getAction((output[2].charAt(0)));
+        road = new AutomatonRoad(start,end,action);
+
+        automaton.addRoad(road);
     }
     
     /**
