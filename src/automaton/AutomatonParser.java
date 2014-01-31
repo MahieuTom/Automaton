@@ -10,58 +10,94 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author .
+ * Parse een '.aut' bestand.
+ * @author Tom Mahieu
  */
 public class AutomatonParser {
+    private boolean startGevonden = false;
+    private boolean finalGevonden = false;
+    private String file;
+    private Automaton automaton;
+    
     /**
-     * TODO: parse!
-     * @param filename 
+     * Begin het parsen van de Automaton.
+     * @param filename deze moet '.aut' extentie bevatten
      */
-    public AutomatonParser(String filename) throws Exception{
-        FileInputStream stream = new FileInputStream(filename);
+    public AutomatonParser(String filename){
+        if (filename.matches(".aut")){
+            file = filename;
+            try {
+                parse();
+            }catch(Exception e){
+                System.err.println("File not formatted right!");
+            }
+            
+        } else
+            System.err.println("File extention is not correct.");
+    }
+    
+    
+    
+    /**
+     * Gaat iedere lijn in het in te lezen bestand af om het te verwerken.
+     * @throws Exception Error in het parsen.
+     */
+    public void parse() throws Exception{
+        FileInputStream stream = new FileInputStream(file);
         DataInputStream in = new DataInputStream(stream);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
         String s;
         while ((s = br.readLine()) != null)   {
-            if(s.matches("(START) |- ")){
-                s.replaceFirst("(START) |- ", "");
-                int start = Integer.parseInt(s);
-            }else if(s.matches(" -| (FINAL) ")){
-                s.replaceFirst(" -| (FINAL) ", "");
-                int einde = Integer.parseInt(s);
-            }else{
-                ;
-            }
+            editAtomaton(s);
             System.out.println(s);
         }
         in.close();
         
-        char c = 'D';
-        AutomatonActions aa = AutomatonActions.EMPTY;
-        aa = aa.getAction(c);
+        if(!startGevonden && !finalGevonden){
+            throw new Exception();
+        }
     }
     
-    
-    
     /**
-     * 
-     * @throws Exception 
+     * Controleer een string en voeg het toe aan de automaton.
+     * @param s de string die moet gecontroleerd worden.
      */
-    public void parse() throws Exception{
-        throw new Exception("File not formatted right!");
+    private void editAtomaton(String s) throws Exception{
+        if(s.matches("(START) |- ")){
+            s = s.replaceFirst("(START) |- ", "");
+            automaton.setStart(Integer.parseInt(s));
+            startGevonden = true;
+        }else if(s.matches(" -| (FINAL) ")){
+            s = s.replaceFirst(" -| (FINAL) ", "");
+            automaton.setFinal(Integer.parseInt(s));
+            finalGevonden = true;
+        }else{
+            int start,end;
+            AutomatonActions action;
+            String[] output = new String[3];
+            AutomatonRoad road;
+            
+            output = s.split(" "); //TODO: safe & correct???
+            start = Integer.parseInt(output[0]);
+            end = Integer.parseInt(output[1]);
+            action = AutomatonActions.getAction((output[2].charAt(0)));
+            road = new AutomatonRoad(start,end,action);
+            
+            automaton.addRoad(road);
+        }
     }
     
     /**
-     * 
-     * @return 
+     * Geeft de berekende automaton terug.
+     * @return de berekende automaton.
      */
     public Automaton automaton(){
-        return null;
+        return automaton;
     }
 }

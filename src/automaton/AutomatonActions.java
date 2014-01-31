@@ -24,7 +24,7 @@ public enum AutomatonActions {
      * @return actie die een traject heeft.
      * @throws java.lang.Exception als het karakter niet herkent word.
      */
-    public AutomatonActions getAction(char c) throws Exception{
+    public static AutomatonActions getAction(char c) throws Exception{
         switch(c){
             case 'D':
             case 'd':
