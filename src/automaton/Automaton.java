@@ -11,9 +11,9 @@ import java.util.Vector;
  * @author .
  */
 public class Automaton {
-    private int m_start;
-    private int m_final;
-    private Vector<AutomatonRoad> m_roads;
+    private int m_Start;
+    private int m_Final;
+    private Vector<AutomatonRoad> m_Roads;
     
     /**
      * 
@@ -38,7 +38,7 @@ public class Automaton {
      * @param start het start punt.
      */
     public void setStart(int start){
-        m_start = start;
+        m_Start = start;
     }
     
     /**
@@ -46,7 +46,7 @@ public class Automaton {
      * @param end het final punt.
      */
     public void setFinal(int end){
-        m_final = end;
+        m_Final = end;
     }
     
     /**
@@ -54,6 +54,6 @@ public class Automaton {
      * @param road een gemaakte weg.
      */
     public void addRoad(AutomatonRoad road){
-        m_roads.add(road);
+        m_Roads.add(road);
     }
 }

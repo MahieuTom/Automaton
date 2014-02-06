@@ -9,9 +9,9 @@ package automaton;
  * @author Tom Mahieu
  */
 public class AutomatonRoad {
-    private int m_start;
-    private int m_final;
-    private AutomatonActions m_action;
+    private int m_Start;
+    private int m_Final;
+    private AutomatonActions m_Action;
     
     /**
      * Maak een nieuwe connectie aan.
@@ -20,9 +20,9 @@ public class AutomatonRoad {
      * @param action 
      */
     AutomatonRoad(int start, int end, AutomatonActions action){
-        m_start = start;
-        m_final = end;
-        m_action = action;
+        m_Start = start;
+        m_Final = end;
+        m_Action = action;
     }
     
     /**
@@ -30,7 +30,7 @@ public class AutomatonRoad {
      * @return startnummer.
      */
     public int getStart(){
-        return m_start;
+        return m_Start;
     }
     
     /**
@@ -38,7 +38,7 @@ public class AutomatonRoad {
      * @return de finish.
      */
     public int getFinal(){
-        return m_final;
+        return m_Final;
     }
     
     /**
@@ -46,6 +46,6 @@ public class AutomatonRoad {
      * @return de actie die er gebeurt.
      */
     public AutomatonActions getAction(){
-        return m_action;
+        return m_Action;
     }
 }
