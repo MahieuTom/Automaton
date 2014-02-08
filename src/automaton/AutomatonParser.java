@@ -44,8 +44,8 @@ public class AutomatonParser {
 
         String s;
         while ((s = br.readLine()) != null)   {
-            editAtomaton(s);
             System.out.println(s);
+            editAtomaton(s);
         }
         in.close();
         
@@ -78,7 +78,7 @@ public class AutomatonParser {
      * Maar een nieuwe connectie aan tussen punten.
      * @param s de bewoording van de connectie opgegeven in het bestand.
      */
-    private void parseRoad(String s) throws Exception{
+    private void parseRoad(String s) throws Exception{ //TODO: throw error
         int start,end;
         AutomatonActions action;
         String[] output;
