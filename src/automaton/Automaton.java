@@ -13,7 +13,7 @@ public class Automaton {
 
     private int m_Start;
     private int m_Final;
-    private Vector<AutomatonRoad> m_Roads;
+    private Vector<AutomatonRoad> m_Roads = new Vector();
 
     /**
      *

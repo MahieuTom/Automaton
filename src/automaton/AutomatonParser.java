@@ -24,12 +24,8 @@ public class AutomatonParser {
      */
     public AutomatonParser(String filename) {
         if (filename.matches("(.*).aut$")) {
+            automaton = new Automaton();
             file = "src/adventures/" + filename;
-            try {
-                parse();
-            } catch (Exception e) {
-                System.err.println("File not formatted right!" + e);
-            }
         } else {
             System.err.println("File extention is not correct.");
         }
@@ -48,7 +44,6 @@ public class AutomatonParser {
 
         String s;
         while ((s = br.readLine()) != null) {
-            System.out.println(s);
             editAtomaton(s);
         }
         in.close();
@@ -64,15 +59,15 @@ public class AutomatonParser {
      * @param s de string die moet gecontroleerd worden.
      */
     private void editAtomaton(String s) throws Exception {
-        if (s.matches("^\\(START\\) \\|- [0-9]+$") && !startGevonden) {
+        if (s.matches("^\\(START\\) \\|- [0-9]+") && !startGevonden) {
             s = s.replace("(START) |- ", "");
             automaton.setStart(Integer.parseInt(s));
             startGevonden = true;
-        } else if (s.matches("[0-9]+$ -\\| \\(FINAL\\)") && !finalGevonden) {
+        } else if (s.matches("[0-9]+ -\\| \\(FINAL\\)$") && !finalGevonden) {
             s = s.replace(" -| (FINAL)", "");
             automaton.setFinal(Integer.parseInt(s));
             finalGevonden = true;
-        } else if ((startGevonden && s.matches("^\\(START\\) \\|- [0-9]+$")) || (finalGevonden && s.matches("[0-9]+$ -\\| \\(FINAL\\)"))) {
+        } else if ((startGevonden && s.matches("^\\(START\\) \\|- [0-9]+")) || (finalGevonden && s.matches("[0-9]+ -\\| \\(FINAL\\)$"))) {
             throw new Exception();
         } else {
             parseRoad(s);
@@ -84,17 +79,21 @@ public class AutomatonParser {
      *
      * @param s de bewoording van de connectie opgegeven in het bestand.
      */
-    private void parseRoad(String s) throws Exception { //TODO: throw error
+    private void parseRoad(String s) throws Exception {
         int start, end;
         AutomatonActions action;
         String[] output;
         AutomatonRoad road;
 
-        output = s.split(" "); //TODO: safe & correct???
-        start = Integer.parseInt(output[0]);
-        end = Integer.parseInt(output[1]);
-        action = AutomatonActions.getAction((output[2].charAt(0)));
-        road = new AutomatonRoad(start, end, action);
+        output = s.split(" ");
+        if(output.length == 3){
+            start = Integer.parseInt(output[0]);
+            end = Integer.parseInt(output[2]);
+            action = AutomatonActions.getAction((output[1].charAt(0)));
+            road = new AutomatonRoad(start, end, action);
+        }else{
+            throw new Exception("There is a road that is incorrect.");
+        }
 
         automaton.addRoad(road);
     }
