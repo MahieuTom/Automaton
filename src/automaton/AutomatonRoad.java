@@ -1,51 +1,58 @@
 /*
  * This Automaton Project is made by Ghijs Kilani and Tom Mahieu
  */
-
 package automaton;
+
+import java.util.*;
 
 /**
  * Een connectie tussen twee punten opslaan.
+ *
  * @author Tom Mahieu
  */
 public class AutomatonRoad {
-    private int m_Start;
-    private int m_Final;
+
+    private ArrayList<Integer> m_Start = new ArrayList();
+    private ArrayList<Integer> m_Final = new ArrayList();
     private AutomatonActions m_Action;
-    
+
     /**
      * Maak een nieuwe connectie aan.
-     * @param start
+     *
+     * @param start Het startpunt van 
      * @param end
-     * @param action 
+     * @param action
      */
-    AutomatonRoad(int start, int end, AutomatonActions action){
-        m_Start = start;
-        m_Final = end;
+    AutomatonRoad(int start, int end, AutomatonActions action) {
+        m_Start.add(start);
+        m_Final.add(end);
         m_Action = action;
     }
-    
+
     /**
      * Vraag het startnummer op.
+     *
      * @return startnummer.
      */
-    public int getStart(){
+    public ArrayList<Integer> getStart() {
         return m_Start;
     }
-    
+
     /**
      * Vraag het einde op.
+     *
      * @return de finish.
      */
-    public int getFinal(){
+    public ArrayList<Integer> getFinal() {
         return m_Final;
     }
-    
+
     /**
      * Vraag de actie op die op het pad gebeurt.
+     *
      * @return de actie die er gebeurt.
      */
-    public AutomatonActions getAction(){
+    public AutomatonActions getAction() {
         return m_Action;
     }
 }

@@ -3,7 +3,7 @@
  */
 package automaton;
 
-import java.util.Vector;
+import java.util.*;
 
 /**
  *
@@ -11,8 +11,8 @@ import java.util.Vector;
  */
 public class Automaton {
 
-    private int m_Start;
-    private int m_Final;
+    private ArrayList<Integer> m_Start = new ArrayList();
+    private ArrayList<Integer> m_Final = new ArrayList();
     private Vector<AutomatonRoad> m_Roads = new Vector();
 
     /**
@@ -21,7 +21,14 @@ public class Automaton {
      * @return
      */
     public Automaton intersection(Automaton aut) {
-        return null;
+        Automaton a = new Automaton();
+        for (int i=0; i<this.m_Roads.size(); i++){
+            m_Start.add(i);
+            m_Final.add(i);
+            AutomatonRoad road = new AutomatonRoad(i,i,AutomatonActions.EMPTY);
+            m_Roads.add(road);
+        }
+        return a;
     }
 
     /**
@@ -30,16 +37,16 @@ public class Automaton {
      * @return
      */
     public String getShortestExample(Boolean accept) {
-        return null;
+        return null; // TODO: Vergeet niet er maar 1 terug te geven!
     }
-
+    
     /**
      * Waar moet de Automaton starten.
      *
      * @param start het start punt.
      */
     public void setStart(int start) {
-        m_Start = start;
+        m_Start.add(start);
     }
 
     /**
@@ -48,7 +55,7 @@ public class Automaton {
      * @param end het final punt.
      */
     public void setFinal(int end) {
-        m_Final = end;
+        m_Final.add(end);
     }
 
     /**

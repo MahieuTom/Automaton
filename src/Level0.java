@@ -19,11 +19,15 @@ public class Level0 {
      * naam.
      */
     public static void main(String[] args) {
-        AutomatonParser parse = new AutomatonParser("adventure1.aut");
-        Automaton aut = parse.automaton();
-
-        String output = aut.getShortestExample(false);
-
-        System.out.println(output);
+        try {
+            AutomatonParser parse = new AutomatonParser("adventure1.aut");
+            parse.parse();
+            Automaton a = parse.automaton();
+            System.out.println(a.getShortestExample(true));
+        } catch (Exception e) {
+            System.out.print("Error: ");
+            System.out.println(e.toString());
+            System.out.println(e.getMessage());
+        }
     }
 }
