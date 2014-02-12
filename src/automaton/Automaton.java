@@ -30,7 +30,7 @@ public class Automaton {
         }
         return a;
     }
-
+    
     /**
      *
      * @param accept
