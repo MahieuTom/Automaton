@@ -67,11 +67,11 @@ public class AutomatonParser {
             s = s.replace(" -| (FINAL)", "");
             automaton.setFinal(Integer.parseInt(s));
             finalGevonden = true;
-        } else if ((startGevonden && s.matches("^\\(START\\) \\|- [0-9]+")) || (finalGevonden && s.matches("[0-9]+ -\\| \\(FINAL\\)$"))) {
-            throw new Exception();
-        } else {
+        } else if (s.matches("[0-9]+ [a-zA-Z] [0-9]+")) {
             parseRoad(s);
-        }
+        } else if ((startGevonden && s.matches("^\\(START\\) \\|- [0-9]+")) || (finalGevonden && s.matches("[0-9]+ -\\| \\(FINAL\\)$"))) {
+            throw new Exception("Overwriting start or finish. This is not possible!");
+        } else throw new Exception("File format error!");
     }
 
     /**
