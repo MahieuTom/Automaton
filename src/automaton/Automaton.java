@@ -14,7 +14,7 @@ public class Automaton {
     private ArrayList<Integer> m_Start = new ArrayList();
     private ArrayList<Integer> m_Final = new ArrayList();
     private Vector<AutomatonRoad> m_Roads = new Vector();
-
+    private String reverseActionArray[] = {"D","S","A","R","K","G","T","E"};
     /**
      *
      * @param aut
@@ -51,6 +51,20 @@ public class Automaton {
      * @return
      */
     public String getShortestExample(Boolean accept) {
+        
+        String path = "";
+        Queue<ArrayList<Integer>> q = new LinkedList();
+        ArrayList<Integer> cur = m_Start;
+        q.add(cur);
+        while(true)
+        {
+            for(int i = 0) //uitlegske da ge het niet vergeet: Kijken in roads welke road overeenkomt,
+                //enum in arrayke toevoegen aan pad, en pad verder volgen tot final = final. Probleempunt: oneindige
+                //lus bij cirkel-> array toevoegen met bezochte punten
+            cur = q.remove();
+            path = path.concat(path)
+        }
+        
         return null; // TODO: Vergeet niet er maar 1 terug te geven!
     }
     
