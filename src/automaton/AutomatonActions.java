@@ -75,7 +75,7 @@ public enum AutomatonActions {
                 return "T";
             case EMPTY:
             default:
-                return "$";
+                return "";
         }
     }
 }

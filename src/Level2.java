@@ -5,11 +5,11 @@
 import automaton.*;
 
 /**
- * Vind een uitgang van een adventure in het Rincewind Level.
+ * Vind een uitgang van een adventure in het Cohan Level.
  *
  * @author Tom Mahieu
  */
-public class Level1 {
+public class Level2 {
 
     /**
      * Vind een pad dat geldig is in dit level.
@@ -24,11 +24,13 @@ public class Level1 {
             AutomatonParser parse2 = new AutomatonParser("keyGate.aut");
             AutomatonParser parse3 = new AutomatonParser("dragonRiver.aut");
             AutomatonParser parse4 = new AutomatonParser("swordDragon.aut");
+            AutomatonParser parse5 = new AutomatonParser("archer.aut");
             parse.parse();
             parse1.parse();
             parse2.parse();
             parse3.parse();
             parse4.parse();
+            parse5.parse();
 
             // Verkrijg de automaten.
             Automaton adventure = parse.automaton();
@@ -36,15 +38,27 @@ public class Level1 {
             Automaton keyGate = parse2.automaton();
             Automaton dragonRiver = parse3.automaton();
             Automaton swordDragon = parse4.automaton();
+            Automaton archer = parse5.automaton();
 
             // 1 van deze 2 acties moeten gebeuren bij het tegenkomen van een draag.
             Automaton dragonAction = dragonRiver.union(swordDragon);
+
+            // TODO: Klopt dit?
+            // Alle mogelijkheden om na een draak geen treasures meet te vinden.
+            Automaton dragonTreasure = treasures.intersection(dragonRiver);
+            Automaton dragonSword = treasures.intersection(swordDragon);
+            Automaton getTreasures = dragonTreasure.union(dragonSword);
+            getTreasures = treasures.union(getTreasures);
+
+            //Als er een boogschutter staat dan treasures opnieuw vinden.
+            archer = archer.intersection(getTreasures);
 
             // TODO: Klopt dit?
             // Maak een graaf met alle mogelijkheden.
             Automaton result = adventure.intersection(treasures);
             result = result.intersection(dragonAction);
             result = result.intersection(keyGate);
+            result = result.intersection(archer);
 
             // schrijft een string uit die wordt aanvaard
             // (true staat voor aanvaarden)

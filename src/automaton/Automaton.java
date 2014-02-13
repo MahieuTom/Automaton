@@ -56,7 +56,7 @@ public class Automaton {
         Queue<ArrayList<Integer>> holder = new LinkedList();
         List<ArrayList<Integer>> visited = new LinkedList();
         Map<ArrayList<Integer>, ArrayList<Integer>> vertmap = new HashMap<ArrayList<Integer>, ArrayList<Integer>>();
-        
+
         ArrayList<Integer> cur = m_Start;
         holder.add(cur);
         while (!holder.isEmpty()) {
@@ -75,13 +75,13 @@ public class Automaton {
                 }
             }
         }
-        if (!(cur.equals(m_Final) && accept) || (cur.equals(m_Final) && accept)){
-            ArrayList<Integer> prev = new ArrayList();
-            for (ArrayList<Integer> next = m_Start; next != null; next = vertmap.get(next)){
-                path = path.concat(getRoadActionChar(prev,next));
+        if (!(cur.equals(m_Final) && accept) || (cur.equals(m_Final) && accept)) {
+            ArrayList<Integer> prev = m_Start;
+            for (ArrayList<Integer> next = m_Start; !next.isEmpty(); next = vertmap.get(next)) {
+                path = path + getRoadActionChar(prev, next);
                 prev = next;
             }
-        return path;
+            return path;
         }
         return null;
     }
@@ -114,23 +114,24 @@ public class Automaton {
     }
 
     public String getRoadActionChar(ArrayList<Integer> start, ArrayList<Integer> end) {
-        if (start.equals(end))
-                return "";
-        for(int i = 0; i < m_Roads.size(); i++){
-            if (m_Roads.elementAt(i).getStart().equals(start) && m_Roads.elementAt(i).getFinal().equals(end))
+        if (start.equals(end)) {
+            return "";
+        }
+        for (int i = 0; i < m_Roads.size(); i++) {
+            if (m_Roads.elementAt(i).getStart().equals(start) && m_Roads.elementAt(i).getFinal().equals(end)) {
                 return (m_Roads.elementAt(i).getRoadActionChar());
             }
-        System.out.print("No such road");
-        return null;
         }
-        
-    public List<ArrayList<Integer>> getConnectedVertices(ArrayList<Integer> vertex){
+        return "";
+    }
+
+    public List<ArrayList<Integer>> getConnectedVertices(ArrayList<Integer> vertex) {
         List<ArrayList<Integer>> result = new LinkedList();
-        for (int i = 0; i < m_Roads.size(); i++){
-            if (m_Roads.elementAt(i).getStart().equals(vertex))
+        for (int i = 0; i < m_Roads.size(); i++) {
+            if (m_Roads.elementAt(i).getStart().equals(vertex)) {
                 result.add(m_Roads.elementAt(i).getFinal());
+            }
         }
         return result;
     }
-    }
-
+}
