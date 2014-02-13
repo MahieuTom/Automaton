@@ -23,12 +23,8 @@ public class AutomatonParser {
      * @param filename deze moet '.aut' extentie bevatten
      */
     public AutomatonParser(String filename) {
-        if (filename.matches("(.*).aut$")) {
-            automaton = new Automaton();
-            file = "src/adventures/" + filename;
-        } else {
-            System.err.println("File extention is not correct.");
-        }
+        automaton = new Automaton();
+        file = "src/adventures/" + filename;
     }
 
     /**
@@ -67,7 +63,7 @@ public class AutomatonParser {
             s = s.replace(" -| (FINAL)", "");
             automaton.setFinal(Integer.parseInt(s));
             finalGevonden = true;
-        } else if (s.matches("[0-9]+ [a-zA-Z] [0-9]+")) {
+        } else if (s.matches("[0-9]+ [a-zA-Z\\$] [0-9]+")) {
             parseRoad(s);
         } else if ((startGevonden && s.matches("^\\(START\\) \\|- [0-9]+")) || (finalGevonden && s.matches("[0-9]+ -\\| \\(FINAL\\)$"))) {
             throw new Exception("Overwriting start or finish. This is not possible!");

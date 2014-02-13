@@ -30,8 +30,8 @@ public class Automaton {
         ArrayList<Integer> rfinish = new ArrayList();
         for (int i = 0; i < this.m_Roads.size(); i++) {
             for (int j = 0; j < aut.m_Roads.size(); j++) {
-            rstart.clear();
-            rfinish.clear();
+                rstart.clear();
+                rfinish.clear();
                 if ((this.m_Roads.elementAt(i).getAction() == aut.m_Roads.elementAt(j).getAction()) || (aut.m_Roads.elementAt(j).getStart() == aut.m_Roads.elementAt(j).getFinal())) { //als de intersectie klopt, road combineren en toevoegen
                     rstart.addAll(this.m_Roads.elementAt(i).getStart());
                     rstart.addAll(aut.m_Roads.elementAt(j).getStart());
