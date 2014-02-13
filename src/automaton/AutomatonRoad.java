@@ -19,9 +19,9 @@ public class AutomatonRoad {
     /**
      * Maak een nieuwe connectie aan.
      *
-     * @param start Het startpunt van 
-     * @param end
-     * @param action
+     * @param start Het startpunt van de connectie.
+     * @param end Het eindpunt van de connectie.
+     * @param action De actie die uitgevoerd moet worden uitgevoerd bij het gebruiken van de connectie.
      */
     AutomatonRoad(int start, int end, AutomatonActions action) {
         m_Start.add(start);

@@ -51,4 +51,31 @@ public enum AutomatonActions {
                 return EMPTY;
         } throw new Exception("File not formatted right!");
     }
+    
+    /**
+     * Get the print value of an automaton action.
+     * @param a An action the automaton can have, this is an enum.
+     * @return A letter to print out.
+     */
+    public static String getPrintValue(AutomatonActions a){
+        switch(a){
+            case DRAGON:
+                return "D";
+            case SWORD:
+                return "S";
+            case ARC:
+                return "A";
+            case RIVER:
+                return "R";
+            case KEY:
+                return "K";
+            case GATE:
+                return "G";
+            case TREASURE:
+                return "T";
+            case EMPTY:
+            default:
+                return "$";
+        }
+    }
 }

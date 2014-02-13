@@ -14,7 +14,7 @@ public class Automaton {
     private ArrayList<Integer> m_Start = new ArrayList();
     private ArrayList<Integer> m_Final = new ArrayList();
     private Vector<AutomatonRoad> m_Roads = new Vector();
-    private String reverseActionArray[] = {"D","S","A","R","K","G","T","E"};
+
     /**
      *
      * @param aut
@@ -28,46 +28,47 @@ public class Automaton {
         a.m_Final.addAll(aut.m_Final);  //zorgen dat begin en eind gekend zijn
         ArrayList<Integer> rstart = new ArrayList();
         ArrayList<Integer> rfinish = new ArrayList();
-        for (int i=0; i<this.m_Roads.size(); i++){
+        for (int i = 0; i < this.m_Roads.size(); i++) {
             rstart.clear();
             rfinish.clear();
-            for(int j = 0; j<aut.m_Roads.size();j++){
-                if (this.m_Roads.elementAt(i).getAction() == aut.m_Roads.elementAt(j).getAction()){ //als de intersectie klopt, road combineren en toevoegen
+            for (int j = 0; j < aut.m_Roads.size(); j++) {
+                if (this.m_Roads.elementAt(i).getAction() == aut.m_Roads.elementAt(j).getAction()) { //als de intersectie klopt, road combineren en toevoegen
                     rstart.addAll(this.m_Roads.elementAt(i).getStart());
                     rstart.addAll(aut.m_Roads.elementAt(j).getStart());
                     rfinish.addAll(this.m_Roads.elementAt(i).getFinal());
                     rfinish.addAll(aut.m_Roads.elementAt(j).getFinal());
-                    AutomatonRoad road = new AutomatonRoad(rstart,rfinish,this.m_Roads.elementAt(i).getAction()); //nieuwe road toegevoegd
+                    AutomatonRoad road = new AutomatonRoad(rstart, rfinish, this.m_Roads.elementAt(i).getAction()); //nieuwe road toegevoegd
                     a.addRoad(road);
                 }
             }
         }
         return a;
     }
-    
+
     /**
      *
      * @param accept
      * @return
      */
     public String getShortestExample(Boolean accept) {
-        
+
         String path = "";
         Queue<ArrayList<Integer>> q = new LinkedList();
         ArrayList<Integer> cur = m_Start;
         q.add(cur);
-        while(true)
-        {
-            for(int i = 0) //uitlegske da ge het niet vergeet: Kijken in roads welke road overeenkomt,
-                //enum in arrayke toevoegen aan pad, en pad verder volgen tot final = final. Probleempunt: oneindige
-                //lus bij cirkel-> array toevoegen met bezochte punten
-            cur = q.remove();
+        while (true) {
+            for (int i = 0;) //uitlegske da ge het niet vergeet: Kijken in roads welke road overeenkomt,
+            //enum in arrayke toevoegen aan pad, en pad verder volgen tot final = final. Probleempunt: oneindige
+            //lus bij cirkel-> array toevoegen met bezochte punten
+            {
+                cur = q.remove();
+            }
             path = path.concat(path)
         }
-        
+
         return null; // TODO: Vergeet niet er maar 1 terug te geven!
     }
-    
+
     /**
      * Waar moet de Automaton starten.
      *
