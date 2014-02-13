@@ -13,14 +13,14 @@ public class Automaton {
 
     private ArrayList<Integer> m_Start = new ArrayList();
     private ArrayList<Integer> m_Final = new ArrayList();
-    private ArrayList<AutomatonVertex> m_Vertices = new ArrayList();
+    private Vector<AutomatonRoad> m_Roads = new Vector();
 
     /**
      *
      * @param aut
      * @return
      */
-    /*public Automaton intersection(Automaton aut) {
+    public Automaton intersection(Automaton aut) {
         Automaton a = new Automaton();
         a.m_Start.addAll(this.m_Start);
         a.m_Start.addAll(aut.m_Start);
@@ -43,20 +43,19 @@ public class Automaton {
             }
         }
         return a;
-    }*/
+    }
 
     /**
      *
      * @param accept
      * @return
      */
-    /*public String getShortestExample(Boolean accept) {
+    public String getShortestExample(Boolean accept) {
 
         String path = "";
-        List<ArrayList<Integer>> vert;
         Queue<ArrayList<Integer>> holder = new LinkedList();
         List<ArrayList<Integer>> visited = new LinkedList();
-        Map<ArrayList<Integer>, List<ArrayList<Integer>>> vertmap = new HashMap<ArrayList<Integer>, List<ArrayList<Integer>>>();
+        Map<ArrayList<Integer>, ArrayList<Integer>> vertmap = new HashMap<ArrayList<Integer>, ArrayList<Integer>>();
 
         ArrayList<Integer> cur = m_Start;
         holder.add(cur);
@@ -65,41 +64,24 @@ public class Automaton {
             if (cur.equals(m_Final)) {
                 break;
             } else {
-                vert = getConnectedVertices(cur);
-                for (ArrayList<Integer> test : vert) {
-                    if (!visited.contains(test)) {
-                        holder.add(test);
-                        visited.add(test);
+                for (ArrayList<Integer> vert : getConnectedVertices(cur)) {
+                    if (!visited.contains(vert)) {
+                        holder.add(vert);
+                        visited.add(vert);
+
+                        vertmap.put(cur, vert);
                     }
+
                 }
-                vertmap.put(cur, vert);
             }
         }
         if (!(cur.equals(m_Final) && accept) || (cur.equals(m_Final) && accept)) {
             ArrayList<Integer> prev = m_Start;
-            for () {
-                List<ArrayList<Integer>> index = vertmap.get(prev.get(0));
-                int i = 0;
-                for (ArrayList<Integer> next = index.get(i); !next.isEmpty(); next = index.get(i)) {
-                    path = path + getRoadActionChar(prev, next);
-                    ++i;
-                }
+            for (ArrayList<Integer> next = m_Start; !next.isEmpty(); next = vertmap.get(next)) {
+                path = path + getRoadActionChar(prev, next);
+                prev = next;
             }
             return path;
-        }
-        return null;
-    }*/
-    
-    /**
-     * 
-     * @param id To be found.
-     * @return The vertex or null.
-     */
-    public AutomatonVertex findVertexById(ArrayList<Integer> id){
-        for(int i=0; i<m_Vertices.size(); i++){
-            if (m_Vertices.get(i).getId() == id){
-                return m_Vertices.get(i);
-            }
         }
         return null;
     }
@@ -123,15 +105,15 @@ public class Automaton {
     }
 
     /**
-     * Voeg een extra knoop toe.
+     * Voeg een extra connectie toe.
      *
-     * @param vertex een gemaakte punt.
+     * @param road een gemaakte weg.
      */
-    public void addVertex(AutomatonVertex vertex) {
-        m_Vertices.add(vertex);
+    public void addRoad(AutomatonRoad road) {
+        m_Roads.add(road);
     }
 
-    /*public String getRoadActionChar(ArrayList<Integer> start, ArrayList<Integer> end) {
+    public String getRoadActionChar(ArrayList<Integer> start, ArrayList<Integer> end) {
         if (start.equals(end)) {
             return "";
         }
@@ -151,5 +133,5 @@ public class Automaton {
             }
         }
         return result;
-    }*/
+    }
 }

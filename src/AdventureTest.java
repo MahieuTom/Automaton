@@ -7,7 +7,7 @@ public class AdventureTest {
     public static void main(String[] args) {
         try {
             // leest de automaat a.aut in
-            AutomatonParser parse1 = new AutomatonParser("adventure2.aut");
+            AutomatonParser parse1 = new AutomatonParser("adventure1.aut");
             // leest de automaat b.aut in
             //AutomatonParser parse2 = new AutomatonParser("adventure2.aut");
             parse1.parse();

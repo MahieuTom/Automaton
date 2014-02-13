@@ -12,18 +12,35 @@ import java.util.*;
  */
 public class AutomatonRoad {
 
-    private AutomatonVertex m_Final;
+    private ArrayList<Integer> m_Start = new ArrayList();
+    private ArrayList<Integer> m_Final = new ArrayList();
     private AutomatonActions m_Action;
 
     /**
      * Maak een nieuwe connectie aan.
      *
+     * @param start Het startpunt van de connectie.
      * @param end Het eindpunt van de connectie.
      * @param action De actie die uitgevoerd moet worden uitgevoerd bij het gebruiken van de connectie.
      */
-    AutomatonRoad(AutomatonVertex end, AutomatonActions action) {
-        m_Final = end;
+    AutomatonRoad(int start, int end, AutomatonActions action) {
+        m_Start.add(start);
+        m_Final.add(end);
         m_Action = action;
+    }
+    AutomatonRoad(ArrayList<Integer> start, ArrayList<Integer> end, AutomatonActions action) {
+        m_Start.addAll(start);
+        m_Final.addAll(end);
+        m_Action = action;
+    }
+
+    /**
+     * Vraag het startnummer op.
+     *
+     * @return startnummer.
+     */
+    public ArrayList<Integer> getStart() {
+        return m_Start;
     }
 
     /**
@@ -31,7 +48,7 @@ public class AutomatonRoad {
      *
      * @return de finish.
      */
-    public AutomatonVertex getEndNode() {
+    public ArrayList<Integer> getFinal() {
         return m_Final;
     }
 
@@ -44,10 +61,6 @@ public class AutomatonRoad {
         return m_Action;
     }
     
-    /**
-     * 
-     * @return De string die uitgeprint zal worden.
-     */
     public String getRoadActionChar(){
         return AutomatonActions.getPrintValue(m_Action);
     }
