@@ -1,0 +1,21 @@
+(START) |- 1
+3 -| (FINAL)
+1 S 2
+2 D 3
+
+public Automaton union(Automaton a) {
+    Automaton result = new Automaton();
+    int length = this.m_Roads.size() + a.m_Roads.size();
+    thisLength = this.m_Roads.size();
+
+    for(int i=0; i<length; i++){
+        if (i<thisLength)
+            road = this.m_Roads.get(i);
+        else
+            road = a.m_Roads.get(i-thisLength);
+
+        result.addRoad(road);
+    }
+
+    return result;
+}

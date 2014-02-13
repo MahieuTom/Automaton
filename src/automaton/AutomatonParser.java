@@ -4,6 +4,7 @@
 package automaton;
 
 import java.io.*;
+import java.util.*;
 
 /**
  * Parse een '.aut' bestand.
@@ -22,7 +23,7 @@ public class AutomatonParser {
      *
      * @param filename deze moet '.aut' extentie bevatten
      */
-    public AutomatonParser(String filename) {
+    AutomatonParser(String filename) {
         if (filename.matches("(.*).aut$")) {
             automaton = new Automaton();
             file = "src/adventures/" + filename;
@@ -71,7 +72,9 @@ public class AutomatonParser {
             parseRoad(s);
         } else if ((startGevonden && s.matches("^\\(START\\) \\|- [0-9]+")) || (finalGevonden && s.matches("[0-9]+ -\\| \\(FINAL\\)$"))) {
             throw new Exception("Overwriting start or finish. This is not possible!");
-        } else throw new Exception("File format error!");
+        } else {
+            throw new Exception("File format error!");
+        }
     }
 
     /**
@@ -80,22 +83,37 @@ public class AutomatonParser {
      * @param s de bewoording van de connectie opgegeven in het bestand.
      */
     private void parseRoad(String s) throws Exception {
-        int start, end;
+        ArrayList<Integer> start = new ArrayList();
+        ArrayList<Integer> end = new ArrayList();
         AutomatonActions action;
         String[] output;
         AutomatonRoad road;
+        AutomatonVertex vertex, endNode;
 
         output = s.split(" ");
-        if(output.length == 3){
-            start = Integer.parseInt(output[0]);
-            end = Integer.parseInt(output[2]);
+        if (output.length == 3) {
+            start.add(Integer.parseInt(output[0]));
+            end.add(Integer.parseInt(output[2]));
             action = AutomatonActions.getAction((output[1].charAt(0)));
-            road = new AutomatonRoad(start, end, action);
-        }else{
+
+            // Vind of maak een start en eind knoop.
+            vertex = automaton.findVertexById(start);
+            if (vertex == null) {
+                vertex = new AutomatonVertex(start);
+                automaton.addVertex(vertex);
+            }
+            endNode = automaton.findVertexById(start);
+            if (endNode == null) {
+                endNode = new AutomatonVertex(end);
+                automaton.addVertex(endNode);
+            }
+
+            // Maak de connectie en voeg het toe.
+            road = new AutomatonRoad(endNode, action);
+            vertex.addConnection(road);
+        } else {
             throw new Exception("There is a road that is incorrect.");
         }
-
-        automaton.addRoad(road);
     }
 
     /**

@@ -13,14 +13,14 @@ public class Automaton {
 
     private ArrayList<Integer> m_Start = new ArrayList();
     private ArrayList<Integer> m_Final = new ArrayList();
-    private ArrayList<AutomatonVertex> m_Vertices = new ArrayList();
+    private Vector<AutomatonRoad> m_Roads = new Vector();
 
     /**
      *
      * @param aut
      * @return
      */
-    /*public Automaton intersection(Automaton aut) {
+    public Automaton intersection(Automaton aut) {
         Automaton a = new Automaton();
         a.m_Start.addAll(this.m_Start);
         a.m_Start.addAll(aut.m_Start);
@@ -43,14 +43,14 @@ public class Automaton {
             }
         }
         return a;
-    }*/
+    }
 
     /**
      *
      * @param accept
      * @return
      */
-    /*public String getShortestExample(Boolean accept) {
+    public String getShortestExample(Boolean accept) {
 
         String path = "";
         List<ArrayList<Integer>> vert;
@@ -88,20 +88,6 @@ public class Automaton {
             return path;
         }
         return null;
-    }*/
-    
-    /**
-     * 
-     * @param id To be found.
-     * @return The vertex or null.
-     */
-    public AutomatonVertex findVertexById(ArrayList<Integer> id){
-        for(int i=0; i<m_Vertices.size(); i++){
-            if (m_Vertices.get(i).getId() == id){
-                return m_Vertices.get(i);
-            }
-        }
-        return null;
     }
 
     /**
@@ -123,15 +109,15 @@ public class Automaton {
     }
 
     /**
-     * Voeg een extra knoop toe.
+     * Voeg een extra connectie toe.
      *
-     * @param vertex een gemaakte punt.
+     * @param road een gemaakte weg.
      */
-    public void addVertex(AutomatonVertex vertex) {
-        m_Vertices.add(vertex);
+    public void addRoad(AutomatonRoad road) {
+        m_Roads.add(road);
     }
 
-    /*public String getRoadActionChar(ArrayList<Integer> start, ArrayList<Integer> end) {
+    public String getRoadActionChar(ArrayList<Integer> start, ArrayList<Integer> end) {
         if (start.equals(end)) {
             return "";
         }
@@ -151,5 +137,5 @@ public class Automaton {
             }
         }
         return result;
-    }*/
+    }
 }
