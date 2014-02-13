@@ -60,4 +60,8 @@ public class AutomatonRoad {
     public AutomatonActions getAction() {
         return m_Action;
     }
+    
+    public String getRoadActionChar(){
+        return AutomatonActions.getPrintValue(m_Action);
+    }
 }

@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  *
- * @author .
+ * @author Ghijs Kilani
  */
 public class Automaton {
 
@@ -53,20 +53,37 @@ public class Automaton {
     public String getShortestExample(Boolean accept) {
 
         String path = "";
-        Queue<ArrayList<Integer>> q = new LinkedList();
+        Queue<ArrayList<Integer>> holder = new LinkedList();
+        List<ArrayList<Integer>> visited = new LinkedList();
+        Map<ArrayList<Integer>, ArrayList<Integer>> vertmap = new HashMap<ArrayList<Integer>, ArrayList<Integer>>();
+        
         ArrayList<Integer> cur = m_Start;
-        q.add(cur);
-        while (true) {
-            for (int i = 0;) //uitlegske da ge het niet vergeet: Kijken in roads welke road overeenkomt,
-            //enum in arrayke toevoegen aan pad, en pad verder volgen tot final = final. Probleempunt: oneindige
-            //lus bij cirkel-> array toevoegen met bezochte punten
-            {
-                cur = q.remove();
-            }
-            path = path.concat(path)
-        }
+        holder.add(cur);
+        while (!holder.isEmpty()) {
+            cur = holder.remove();
+            if (cur.equals(m_Final)) {
+                break;
+            } else {
+                for (ArrayList<Integer> vert : getConnectedVertices(cur)) {
+                    if (!visited.contains(vert)) {
+                        holder.add(vert);
+                        visited.add(vert);
 
-        return null; // TODO: Vergeet niet er maar 1 terug te geven!
+                        vertmap.put(cur, vert);
+                    }
+
+                }
+            }
+        }
+        if (!(cur.equals(m_Final) && accept) || (cur.equals(m_Final) && accept)){
+            ArrayList<Integer> prev = new ArrayList();
+            for (ArrayList<Integer> next = m_Start; next != null; next = vertmap.get(next)){
+                path = path.concat(getRoadActionChar(prev,next));
+                prev = next;
+            }
+        return path;
+        }
+        return null;
     }
 
     /**
@@ -95,4 +112,25 @@ public class Automaton {
     public void addRoad(AutomatonRoad road) {
         m_Roads.add(road);
     }
-}
+
+    public String getRoadActionChar(ArrayList<Integer> start, ArrayList<Integer> end) {
+        if (start.equals(end))
+                return "";
+        for(int i = 0; i < m_Roads.size(); i++){
+            if (m_Roads.elementAt(i).getStart().equals(start) && m_Roads.elementAt(i).getFinal().equals(end))
+                return (m_Roads.elementAt(i).getRoadActionChar());
+            }
+        System.out.print("No such road");
+        return null;
+        }
+        
+    public List<ArrayList<Integer>> getConnectedVertices(ArrayList<Integer> vertex){
+        List<ArrayList<Integer>> result = new LinkedList();
+        for (int i = 0; i < m_Roads.size(); i++){
+            if (m_Roads.elementAt(i).getStart().equals(vertex))
+                result.add(m_Roads.elementAt(i).getFinal());
+        }
+        return result;
+    }
+    }
+
