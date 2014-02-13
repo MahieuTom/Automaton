@@ -21,13 +21,15 @@ public class AutomatonRoad {
      *
      * @param start Het startpunt van de connectie.
      * @param end Het eindpunt van de connectie.
-     * @param action De actie die uitgevoerd moet worden uitgevoerd bij het gebruiken van de connectie.
+     * @param action De actie die uitgevoerd moet worden uitgevoerd bij het
+     * gebruiken van de connectie.
      */
     AutomatonRoad(int start, int end, AutomatonActions action) {
         m_Start.add(start);
         m_Final.add(end);
         m_Action = action;
     }
+
     AutomatonRoad(ArrayList<Integer> start, ArrayList<Integer> end, AutomatonActions action) {
         m_Start.addAll(start);
         m_Final.addAll(end);
@@ -60,8 +62,8 @@ public class AutomatonRoad {
     public AutomatonActions getAction() {
         return m_Action;
     }
-    
-    public String getRoadActionChar(){
+
+    public String getRoadActionChar() {
         return AutomatonActions.getPrintValue(m_Action);
     }
 }

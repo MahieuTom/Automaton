@@ -16,9 +16,10 @@ public class Automaton {
     private Vector<AutomatonRoad> m_Roads = new Vector();
 
     /**
+     * Maak een intersectie tussen 1 automatons.
      *
-     * @param aut
-     * @return
+     * @param aut De 2e automaton.
+     * @return Een nieuwe automaton die de intersectie vormt.
      */
     public Automaton intersection(Automaton aut) {
         Automaton a = new Automaton();
@@ -46,9 +47,41 @@ public class Automaton {
     }
 
     /**
+     * Maak de unie tussen 2 automaten.
      *
-     * @param accept
-     * @return
+     * @param aut De 2e automaton.
+     * @return Een nieuwe automaton die de unie vormt.
+     */
+    public Automaton union(Automaton aut) {
+        Automaton a = new Automaton();
+        a.m_Start.addAll(this.m_Start);
+        a.m_Start.addAll(aut.m_Start);
+        a.m_Final.addAll(this.m_Final);
+        a.m_Final.addAll(aut.m_Final);  //zorgen dat begin en eind gekend zijn
+        ArrayList<Integer> rstart = new ArrayList();
+        ArrayList<Integer> rfinish = new ArrayList();
+        for (int i = 0; i < this.m_Roads.size(); i++) {
+            for (int j = 0; j < aut.m_Roads.size(); j++) {
+                rstart.clear();
+                rfinish.clear();
+                if ((this.m_Roads.elementAt(i).getAction() == aut.m_Roads.elementAt(j).getAction()) || (aut.m_Roads.elementAt(j).getStart() == aut.m_Roads.elementAt(j).getFinal())) { //als de unie klopt, road combineren en toevoegen
+                    rstart.addAll(this.m_Roads.elementAt(i).getStart());
+                    rstart.addAll(aut.m_Roads.elementAt(j).getStart());
+                    rfinish.addAll(this.m_Roads.elementAt(i).getFinal());
+                    rfinish.addAll(aut.m_Roads.elementAt(j).getFinal());
+                    AutomatonRoad road = new AutomatonRoad(rstart, rfinish, this.m_Roads.elementAt(i).getAction()); //nieuwe road toegevoegd
+                    a.addRoad(road);
+                }
+            }
+        }
+        return a;
+    }
+
+    /**
+     * Vraag het kortste pad op.
+     *
+     * @param accept Wordt het geaccepteerd?
+     * @return Het kortste pad dat er bestaat.
      */
     public String getShortestExample(Boolean accept) {
 
@@ -116,6 +149,13 @@ public class Automaton {
         m_Roads.add(road);
     }
 
+    /**
+     * Vraag de visualisatie van een connectie op.
+     * 
+     * @param start Het startpunt van de connectie.
+     * @param end Het eindpunt van de connectie.
+     * @return De string dat wordt gebruikt om de connectie aan te duiden.
+     */
     public String getRoadActionChar(ArrayList<Integer> start, ArrayList<Integer> end) {
         if (start.equals(end)) {
             return "";
@@ -128,6 +168,12 @@ public class Automaton {
         return "";
     }
 
+    /**
+     * Verkrijg de geconnecteerde vertices tot een bepaald startpunt.
+     *
+     * @param vertex Het startpunt.
+     * @return Een lijst van vertices die geconnecteerd zijn met het startpunt.
+     */
     public List<ArrayList<Integer>> getConnectedVertices(ArrayList<Integer> vertex) {
         List<ArrayList<Integer>> result = new LinkedList();
         for (int i = 0; i < m_Roads.size(); i++) {

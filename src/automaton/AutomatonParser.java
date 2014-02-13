@@ -67,7 +67,9 @@ public class AutomatonParser {
             parseRoad(s);
         } else if ((startGevonden && s.matches("^\\(START\\) \\|- [0-9]+")) || (finalGevonden && s.matches("[0-9]+ -\\| \\(FINAL\\)$"))) {
             throw new Exception("Overwriting start or finish. This is not possible!");
-        } else throw new Exception("File format error!");
+        } else {
+            throw new Exception("File format error!");
+        }
     }
 
     /**
@@ -82,12 +84,12 @@ public class AutomatonParser {
         AutomatonRoad road;
 
         output = s.split(" ");
-        if(output.length == 3){
+        if (output.length == 3) {
             start = Integer.parseInt(output[0]);
             end = Integer.parseInt(output[2]);
             action = AutomatonActions.getAction((output[1].charAt(0)));
             road = new AutomatonRoad(start, end, action);
-        }else{
+        } else {
             throw new Exception("There is a road that is incorrect.");
         }
 

@@ -1,14 +1,15 @@
 /*
  * This Automaton Project is made by Ghijs Kilani and Tom Mahieu
  */
-
 package automaton;
 
 /**
- * Acties omzetten naar 
+ * Acties omzetten naar
+ *
  * @author Tom Mahieu
  */
 public enum AutomatonActions {
+
     DRAGON,
     SWORD,
     ARC,
@@ -17,15 +18,16 @@ public enum AutomatonActions {
     GATE,
     TREASURE,
     EMPTY;
-    
+
     /**
      * Karakter die in de file staat wordt omgezet tot een actie.
+     *
      * @param c karakter die in de file staat wordt omgezet tot een actie.
      * @return actie die een traject heeft.
      * @throws java.lang.Exception als het karakter niet herkent word.
      */
-    public static AutomatonActions getAction(char c) throws Exception{
-        switch(c){
+    public static AutomatonActions getAction(char c) throws Exception {
+        switch (c) {
             case 'D':
             case 'd':
                 return DRAGON;
@@ -49,16 +51,18 @@ public enum AutomatonActions {
                 return TREASURE;
             case '$':
                 return EMPTY;
-        } throw new Exception("File not formatted right!");
+        }
+        throw new Exception("File not formatted right!");
     }
-    
+
     /**
      * Get the print value of an automaton action.
+     *
      * @param a An action the automaton can have, this is an enum.
      * @return A letter to print out.
      */
-    public static String getPrintValue(AutomatonActions a){
-        switch(a){
+    public static String getPrintValue(AutomatonActions a) {
+        switch (a) {
             case DRAGON:
                 return "D";
             case SWORD:
