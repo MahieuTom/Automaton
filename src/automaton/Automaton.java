@@ -69,18 +69,21 @@ public class Automaton {
                         holder.add(vert);
                         visited.add(vert);
 
-                        vertmap.put(cur, vert);
+                        vertmap.put(vert, cur);
                     }
 
                 }
             }
         }
         if (!(cur.equals(m_Final) && accept) || (cur.equals(m_Final) && accept)) {
-            ArrayList<Integer> prev = m_Start;
-            for (ArrayList<Integer> next = m_Start; !next.isEmpty(); next = vertmap.get(next)) {
-                path = path + getRoadActionChar(prev, next);
+            ArrayList<Integer> prev = m_Final;
+            ArrayList<Integer> next;
+            for (next = m_Final; !next.equals(m_Start); next = vertmap.get(next)) {
+                path = path + getRoadActionChar(next, prev);
                 prev = next;
             }
+            path = path + getRoadActionChar(next, prev);
+            path = new StringBuilder(path).reverse().toString();
             return path;
         }
         return null;
