@@ -22,11 +22,25 @@ public class Automaton {
      */
     public Automaton intersection(Automaton aut) {
         Automaton a = new Automaton();
+        a.m_Start.addAll(this.m_Start);
+        a.m_Start.addAll(aut.m_Start);
+        a.m_Final.addAll(this.m_Final);
+        a.m_Final.addAll(aut.m_Final);  //zorgen dat begin en eind gekend zijn
+        ArrayList<Integer> rstart = new ArrayList();
+        ArrayList<Integer> rfinish = new ArrayList();
         for (int i=0; i<this.m_Roads.size(); i++){
-            m_Start.add(i);
-            m_Final.add(i);
-            AutomatonRoad road = new AutomatonRoad(i,i,AutomatonActions.EMPTY);
-            m_Roads.add(road);
+            rstart.clear();
+            rfinish.clear();
+            for(int j = 0; j<aut.m_Roads.size();j++){
+                if (this.m_Roads.elementAt(i).getAction() == aut.m_Roads.elementAt(j).getAction()){ //als de intersectie klopt, road combineren en toevoegen
+                    rstart.addAll(this.m_Roads.elementAt(i).getStart());
+                    rstart.addAll(aut.m_Roads.elementAt(j).getStart());
+                    rfinish.addAll(this.m_Roads.elementAt(i).getFinal());
+                    rfinish.addAll(aut.m_Roads.elementAt(j).getFinal());
+                    AutomatonRoad road = new AutomatonRoad(rstart,rfinish,this.m_Roads.elementAt(i).getAction()); //nieuwe road toegevoegd
+                    a.addRoad(road);
+                }
+            }
         }
         return a;
     }

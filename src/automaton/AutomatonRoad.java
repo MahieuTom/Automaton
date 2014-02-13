@@ -28,6 +28,11 @@ public class AutomatonRoad {
         m_Final.add(end);
         m_Action = action;
     }
+    AutomatonRoad(ArrayList<Integer> start, ArrayList<Integer> end, AutomatonActions action) {
+        m_Start.addAll(start);
+        m_Final.addAll(end);
+        m_Action = action;
+    }
 
     /**
      * Vraag het startnummer op.
