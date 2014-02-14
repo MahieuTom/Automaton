@@ -19,7 +19,7 @@ public class Level2 {
     public static void main(String[] args) {
         try {
             // De bestanden afleiden.
-            AutomatonParser parse = new AutomatonParser("adventure3.aut");
+            AutomatonParser parse = new AutomatonParser("adventure1.aut");
             AutomatonParser parse1 = new AutomatonParser("dubbleTreasure.aut");
             AutomatonParser parse2 = new AutomatonParser("keyGate.aut");
             AutomatonParser parse3 = new AutomatonParser("dragonRiver.aut");
