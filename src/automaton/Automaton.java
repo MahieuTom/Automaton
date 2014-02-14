@@ -47,37 +47,6 @@ public class Automaton {
     }
 
     /**
-     * Maak de unie tussen 2 automaten.
-     *
-     * @param aut De 2e automaton.
-     * @return Een nieuwe automaton die de unie vormt.
-     */
-    public Automaton union(Automaton aut) {
-        Automaton a = new Automaton();
-        a.m_Start.addAll(this.m_Start);
-        a.m_Start.addAll(aut.m_Start);
-        a.m_Final.addAll(this.m_Final);
-        a.m_Final.addAll(aut.m_Final);  //zorgen dat begin en eind gekend zijn
-        ArrayList<Integer> rstart = new ArrayList();
-        ArrayList<Integer> rfinish = new ArrayList();
-        for (int i = 0; i < this.m_Roads.size(); i++) {
-            for (int j = 0; j < aut.m_Roads.size(); j++) {
-                rstart.clear();
-                rfinish.clear();
-                if ((this.m_Roads.elementAt(i).getAction() == aut.m_Roads.elementAt(j).getAction()) || (aut.m_Roads.elementAt(j).getStart() == aut.m_Roads.elementAt(j).getFinal())) { //als de unie klopt, road combineren en toevoegen
-                    rstart.addAll(this.m_Roads.elementAt(i).getStart());
-                    rstart.addAll(aut.m_Roads.elementAt(j).getStart());
-                    rfinish.addAll(this.m_Roads.elementAt(i).getFinal());
-                    rfinish.addAll(aut.m_Roads.elementAt(j).getFinal());
-                    AutomatonRoad road = new AutomatonRoad(rstart, rfinish, this.m_Roads.elementAt(i).getAction()); //nieuwe road toegevoegd
-                    a.addRoad(road);
-                }
-            }
-        }
-        return a;
-    }
-
-    /**
      * Vraag het kortste pad op.
      *
      * @param accept Wordt het geaccepteerd?

@@ -40,9 +40,6 @@ public class Level2 {
             Automaton swordDragon = parse4.automaton();
             Automaton archer = parse5.automaton();
 
-            // 1 van deze 2 acties moeten gebeuren bij het tegenkomen van een draag.
-            Automaton dragonAction = dragonRiver.union(swordDragon);
-
             // TODO: Klopt dit?
             // Alle mogelijkheden om na een draak geen treasures meet te vinden.
             Automaton dragonTreasure = treasures.intersection(dragonRiver);
@@ -53,12 +50,19 @@ public class Level2 {
             //Als er een boogschutter staat dan treasures opnieuw vinden.
             archer = archer.intersection(getTreasures);
 
-            // TODO: Klopt dit?
             // Maak een graaf met alle mogelijkheden.
             Automaton result = adventure.intersection(treasures);
-            result = result.intersection(dragonAction);
             result = result.intersection(keyGate);
             result = result.intersection(archer);
+            
+            // 1 van deze 2 acties moeten gebeuren bij het tegenkomen van een draag.
+            Automaton dragonTest = result.intersection(dragonRiver);
+            if (dragonTest == null){
+                dragonTest = result.intersection(dragonRiver);
+                result = dragonTest;
+            }else{
+                result = dragonTest;
+            }
 
             // schrijft een string uit die wordt aanvaard
             // (true staat voor aanvaarden)

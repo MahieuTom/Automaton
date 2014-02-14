@@ -37,14 +37,18 @@ public class Level1 {
             Automaton dragonRiver = parse3.automaton();
             Automaton swordDragon = parse4.automaton();
 
-            // 1 van deze 2 acties moeten gebeuren bij het tegenkomen van een draag.
-            Automaton dragonAction = dragonRiver.union(swordDragon);
-
-            // TODO: Klopt dit?
             // Maak een graaf met alle mogelijkheden.
             Automaton result = adventure.intersection(treasures);
-            result = result.intersection(dragonAction);
             result = result.intersection(keyGate);
+            
+            // 1 van deze 2 acties moeten gebeuren bij het tegenkomen van een draag.
+            Automaton dragonTest = result.intersection(dragonRiver);
+            if (dragonTest == null) {
+                dragonTest = result.intersection(swordDragon);
+                result = dragonTest;
+            } else {
+                result = dragonTest;
+            }
 
             // schrijft een string uit die wordt aanvaard
             // (true staat voor aanvaarden)
