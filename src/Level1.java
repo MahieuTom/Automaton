@@ -45,10 +45,8 @@ public class Level1 {
             Automaton dragonTest = result.intersection(dragonRiver);
             if (dragonTest == null) {
                 dragonTest = result.intersection(swordDragon);
-                result = dragonTest;
-            } else {
-                result = dragonTest;
             }
+            result = dragonTest;
 
             // schrijft een string uit die wordt aanvaard
             // (true staat voor aanvaarden)

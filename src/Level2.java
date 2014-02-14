@@ -25,12 +25,14 @@ public class Level2 {
             AutomatonParser parse3 = new AutomatonParser("dragonRiver.aut");
             AutomatonParser parse4 = new AutomatonParser("swordDragon.aut");
             AutomatonParser parse5 = new AutomatonParser("archer.aut");
+            AutomatonParser parse6 = new AutomatonParser("treasuresDragon.aut");
             parse.parse();
             parse1.parse();
             parse2.parse();
             parse3.parse();
             parse4.parse();
             parse5.parse();
+            parse6.parse();
 
             // Verkrijg de automaten.
             Automaton adventure = parse.automaton();
@@ -39,16 +41,7 @@ public class Level2 {
             Automaton dragonRiver = parse3.automaton();
             Automaton swordDragon = parse4.automaton();
             Automaton archer = parse5.automaton();
-
-            // TODO: Klopt dit?
-            // Alle mogelijkheden om na een draak geen treasures meet te vinden.
-            Automaton dragonTreasure = treasures.intersection(dragonRiver);
-            Automaton dragonSword = treasures.intersection(swordDragon);
-            Automaton getTreasures = dragonTreasure.union(dragonSword);
-            getTreasures = treasures.union(getTreasures);
-
-            //Als er een boogschutter staat dan treasures opnieuw vinden.
-            archer = archer.intersection(getTreasures);
+            Automaton treasuresDragon = parse6.automaton();
 
             // Maak een graaf met alle mogelijkheden.
             Automaton result = adventure.intersection(treasures);
@@ -59,10 +52,8 @@ public class Level2 {
             Automaton dragonTest = result.intersection(dragonRiver);
             if (dragonTest == null){
                 dragonTest = result.intersection(dragonRiver);
-                result = dragonTest;
-            }else{
-                result = dragonTest;
-            }
+            } // Test dan of er 2 treasures gevonden worden na een draak!
+            result = dragonTest.intersection(treasuresDragon);
 
             // schrijft een string uit die wordt aanvaard
             // (true staat voor aanvaarden)
