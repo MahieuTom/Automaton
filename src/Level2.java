@@ -19,7 +19,7 @@ public class Level2 {
     public static void main(String[] args) {
         try {
             // De bestanden afleiden.
-            AutomatonParser parse = new AutomatonParser("adventure1.aut");
+            AutomatonParser parse = new AutomatonParser("adventure3.aut");
             AutomatonParser parse1 = new AutomatonParser("dubbleTreasure.aut");
             AutomatonParser parse2 = new AutomatonParser("keyGate.aut");
             AutomatonParser parse3 = new AutomatonParser("dragonRiver.aut");
@@ -47,11 +47,11 @@ public class Level2 {
             Automaton result = adventure.intersection(treasures);
             result = result.intersection(keyGate);
             result = result.intersection(archer);
-            
+
             // 1 van deze 2 acties moeten gebeuren bij het tegenkomen van een draag.
             Automaton dragonTest = result.intersection(dragonRiver);
-            if (dragonTest == null){
-                dragonTest = result.intersection(dragonRiver);
+            if (dragonTest == null) {
+                dragonTest = result.intersection(swordDragon);
             } // Test dan of er 2 treasures gevonden worden na een draak!
             result = dragonTest.intersection(treasuresDragon);
 
